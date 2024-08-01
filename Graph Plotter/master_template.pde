@@ -3,9 +3,10 @@ float[] DataHolder ;
 
 void setup() {
   size(1000, 600);
-  GP.GraphSetup(true, false, "X axis", "Yaxis");
-  GP.GridSetup(-220, 220, 20, -6, 6, 1);
-  GP.SizeSetup(width - 100, height - 100);
+  GP.GraphSetup(false, false, "X axis", "Yaxis");
+  GP.GridSetup(-8, 8, 1, -2, 2, 1);
+  GP.totalPoints *= 10;
+  GP.SizeSetup(width - 150, height - 150);
   GP.Offset(50, 50);
   DataHolder = new float[GP.totalPoints];
   
@@ -19,7 +20,7 @@ void fillData() {
 }
 
 void draw() {
-  background(255);
+  GP.fillBackground(color(255));
   GP.DrawGrid();
   GP.DrawGraph(DataHolder, color(255, 0, 0));
 }

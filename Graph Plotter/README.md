@@ -164,7 +164,7 @@ As processing runs in a way that it overwrites previous values, the order of the
     ```
     This will only output a graph with the grid on top of it, they both cover the background function, hence they will be on the background defined in the function. This is correct and a much better option as it also allows to accurately decide where the point lies and compare graph to the grid.
 
-- Also note that this all aof them are completely optional methods. You may use whichever you need and however you need
+- Also note that this all of them are completely optional methods. You may use whichever you need and however you need
 
 
 #### Caution: The size of each array should always be equal to the ```totalPoints``` variable of the plotter they will be plotted by
@@ -191,7 +191,26 @@ void fill() {// Below this text
 }
 ```
 
+#### Note : Graph Resolution management
+When working with small values of x, you would sometimes desire to store data on decimal values as well. For example
+Example Image here
+In this Graph of x³, the line is quite straight rather than being curvy. This issue is much more visible when the grid is of a small scale, but fear not as there is a way to solve it using this.
+```Processing
+GP.GridSetup(-8, 8, 1, -2, 2, 1);
+
+// Add this line between your GridSetup and DataArray initialization
+GP.totalPoints *= 10;
+
+DataArray = new float[GP.totalPoints];
+```
+Doing this affectively increases the number of points plotted in each graph in the by a scale of 10 changing the result to this
+Example Image Here
+
+It is also important to note that you don't need to use 10 specifically, you can increase by a smaller scale or by a greater scale.
+
 ## Customization
-The ```Master.pde``` already contains an exapmle with 4 graphs. You have already been made aware of the customiztion offered by the setup methods and the drawing methods
-Now what you need to understand is that the main use of the ```Offset(...);``` & ```SizeSetup(...)``` is. It is to allow drawing multiple graphs in the same window as other items including other graphplotter objects
+The ```master_template.pde``` already contains an example with a graph of x³.Additionally you have already been made aware of the customiztion offered by the setup methods and the drawing methods.<br>
+Now what you need to understand is that the main use of the ```Offset(...);``` & ```SizeSetup(...)``` is. It is to allow drawing multiple graphs in the same window as other items including other graph plotter objects
 ![Graph with 2 plotter Objects](https://github.com/user-attachments/assets/a3b7ba9b-67c8-4b6a-ab0c-0edd7bf4f575)
+
+These can be found in the ```examples``` folder
