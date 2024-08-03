@@ -5,7 +5,7 @@
 
 
 #### Why?
-Initially I wanted to read an electrical signal, but as I didn't have an oscilloscope, I though about using my laptop and an arduino device as a replacement. The issue arose that Arduino's builtin Serial Plotter only showed live data, and when some of it has reached outside of its limit (typically around 100 data points) you can never access it again.
+Initially I wanted to read an electrical signal, but as I didn't have an oscilloscope, I thought about using my laptop and an arduino device as a replacement. The issue arose that Arduino's builtin Serial Plotter only showed live data, and when some of it has reached outside of its limit (typically around 100 data points) you can never access it again.
 So I built a graph plotter of my own using processing and eventually started to expand it into this.
 
 ## Working
