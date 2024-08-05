@@ -19,7 +19,6 @@ public class GraphPlotter {
     private int HeightP;
     private int OffsetX = 0;
     private int OffsetY = 0;
-    private color bg = color(255,255,255);
 
     // Setup General Control Methods
     // Setup Graph Plotter Settings
@@ -38,7 +37,7 @@ public class GraphPlotter {
         XMin = xMin;
         XMax = xMax;
         XStep = xStep;
-        totalPoints = XMax - XMin + 1;
+        totalPoints = (XMax - XMin + 1);
     }
 
     // Setup Size
@@ -58,20 +57,10 @@ public class GraphPlotter {
         stroke(255);
         fill(backgroundColor);
         rect(OffsetX, OffsetY, (WidthP) + OffsetX, (HeightP) + OffsetY);
-        bg = backgroundColor;
     }
 
     // Draw the Grid
     void DrawGrid() {
-      
-        strokeWeight(0);
-        stroke(255);
-        fill(bg);
-        // Clear Bottom
-        rect(OffsetX, (HeightP - 50) + OffsetY, WidthP, 50);
-        // Clear Side
-        rect(OffsetX, OffsetY, 100, HeightP);
-
         // draw SubGrid
         if (SubGrid) {
 
@@ -87,7 +76,7 @@ public class GraphPlotter {
             }
             
             // X sub grid
-            for (float i = YMin; i < YMax + 1; i+= YStep/10) {
+            for (float i = YMin; i < YMax; i+= YStep/10) {
                 // Map each y value to a coordinate
                 int y = int(map(i, YMin, YMax, HeightP - 50, 50));
 
@@ -161,8 +150,13 @@ public class GraphPlotter {
 
     // Draw the graph
     void DrawGraph(float[] graph, color graphColor) {
-    stroke(graphColor);
+      stroke(graphColor);
       for (int i = 0; i < totalPoints - 1; i++) {
+        float X1 = 0;
+        float X2 = 0;
+        float Y1 = 0;
+        float Y2 = 0;
+        boolean drawPoints = Points;
 
         // Get coordinate of current value
         float x1 = map(i, 0, totalPoints - 1, 100, WidthP - 50);
@@ -171,18 +165,62 @@ public class GraphPlotter {
         // Get coordinate of next value
         float x2 = map(i + 1, 0, totalPoints - 1, 100, WidthP - 50);
         float y2 = map(graph[i + 1], YMin, YMax, HeightP - 50, 50);
-
-        // Draw line from current value to next value
-        strokeWeight(2);    // Thickness of 2 pixels
-        line((x1) + OffsetX, (y1) + OffsetY, (x2) + OffsetX, (y2) + OffsetY);
-
-        // Draw Points of both values
-        if (Points) {
-            strokeWeight(10);
-            point((x1) + OffsetX, (y1) + OffsetY);
-            point((x2) + OffsetX, (y2) + OffsetY);
+        
+        // Calculate Gradient for filtering lines
+        float m = (y2 - y1) / (x2 - x1);
+        
+        // Fill OUT variables with intitial data
+        X1 = x1;
+        X2 = x2;
+        Y1 = y1;
+        Y2 = y2;
+        
+        // Exception cases to force Y values inside the grid
+        // Modify out variables using coordinate geometry
+        
+        // y1 above grid
+        if (y1 < 50) {
+          Y1 = 50;
+          X1 = (Y1 - y1 + m*x1) / m;
+          drawPoints = false;
         }
+        
+        // y1 below grid
+        if (y1 > HeightP - 50) {
+          Y1 = HeightP - 50;
+          X1 = (Y1 - y1 + m*x1) / m;
+          drawPoints = false;
+        }
+        
+        // y2 above grid
+        if (y2 < 50) {
+          Y2 = 50;
+          X2 = (Y2 - y1 + m*x1) / m;
+          drawPoints = false;
+        } 
+        
+        // y2 below grind
+        if (y2 > HeightP - 50) {
+          Y2 = HeightP - 50;
+          X2 = (Y2 - y1 + m*x1) / m;
+          drawPoints = false;
+        }
+        DrawSegment(drawPoints, X1, Y1, X2, Y2);
       }
+    }
+    
+    void DrawSegment(boolean drawPoint, float X1, float Y1, float X2, float Y2) {
+      // Draw line from current value to next value
+      strokeWeight(2);    // Thickness of 2 pixels
+      line((X1) + OffsetX, (Y1) + OffsetY, (X2) + OffsetX, (Y2) + OffsetY);
+      
+      // Draw Points of both values
+      if (drawPoint) {
+        strokeWeight(10);
+        point((X1) + OffsetX, (Y1) + OffsetY);
+        point((X2) + OffsetX, (Y2) + OffsetY);
+      }
+      
     }
 
     // Added function to return x value using the index value
