@@ -22,7 +22,9 @@ void fillData() {
 void draw() {
   GP.fillBackground(color(255));
   GP.DrawGrid();
-  GP.DrawGraph(DataHolder, color(255, 0, 0));
+  //GP.DrawGraph(DataHolder, color(255, 0, 0));
+  stroke(255, 0, 0);
+  GP.DrawSegment(true, GP.xCo(10), GP.yCo(20), GP.xCo(15), GP.yCo(40));
 }
 
 float fib(float n) {

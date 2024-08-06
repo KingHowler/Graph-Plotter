@@ -52,6 +52,7 @@ public class GraphPlotter {
       OffsetY = offY;
     }
 
+    // fills the background of the Grid with a specific color
     void fillBackground(color backgroundColor) {
         strokeWeight(0);
         stroke(255);
@@ -160,11 +161,13 @@ public class GraphPlotter {
 
         // Get coordinate of current value
         float x1 = map(i, 0, totalPoints - 1, 100, WidthP - 50);
-        float y1 = map(graph[i], YMin, YMax, HeightP - 50, 50);
+        //float y1 = map(graph[i], YMin, YMax, HeightP - 50, 50);
+        float y1 = yCo(graph[i]);
 
         // Get coordinate of next value
         float x2 = map(i + 1, 0, totalPoints - 1, 100, WidthP - 50);
-        float y2 = map(graph[i + 1], YMin, YMax, HeightP - 50, 50);
+        //float y2 = map(graph[i + 1], YMin, YMax, HeightP - 50, 50);
+        float y2 = yCo(graph[i + 1]);
         
         // Calculate Gradient for filtering lines
         float m = (y2 - y1) / (x2 - x1);
@@ -209,6 +212,7 @@ public class GraphPlotter {
       }
     }
     
+    // Draws a straight line segment from one point to another also uses boolean to decide whther to draw points on ends of the segment
     void DrawSegment(boolean drawPoint, float X1, float Y1, float X2, float Y2) {
       // Draw line from current value to next value
       strokeWeight(2);    // Thickness of 2 pixels
@@ -226,5 +230,15 @@ public class GraphPlotter {
     // Added function to return x value using the index value
     float x(int PointNo) {
         return map(PointNo, 0 , totalPoints - 1, XMin, XMax);  // Use this for writing equations using x eg: y = 4x - 29
+    }
+    
+    // Converts Y value on window to Y coordinate on the grid
+    float yCo(float y) {
+      return map(y, YMin, YMax, HeightP - 50, 50);
+    }
+    
+    // Converts X value on window to X coordinate on the grid
+    float xCo(float x) {
+      return map(x, XMin, XMax, 100, WidthP - 50);
     }
 }
