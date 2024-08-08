@@ -3,8 +3,8 @@ float[] DataHolder;
 
 void setup() {
   size(1900, 900);
-  GP.GraphSetup(true, true, "X axis", "Yaxis");
-  GP.GridSetup(-1000, 1000, 100, 0, 20, 1);
+  GP.GraphSetup(false, true, "X axis", "Yaxis");
+  GP.GridSetup(-1000, 1000, 500, 0, 20, 2);
   GP.totalPoints *= 10;
   GP.SizeSetup(width - 150, height - 150);
   GP.Offset(50, 50);
@@ -23,7 +23,6 @@ void draw() {
   GP.fillBackground(color(255));
   GP.DrawGrid();
   GP.DrawGraph(DataHolder, color(255, 0, 0));
-  stroke(255, 0, 0);
 }
 
 float fib(float n) {
