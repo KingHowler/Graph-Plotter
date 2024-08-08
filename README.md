@@ -11,3 +11,4 @@ Processing is a free and easy to use software for Visual Arts and Displays. It i
 > ![Example image](https://github.com/user-attachments/assets/d7f284fe-a1e5-441f-accc-ec9d2f1b469d)
 
 > A display of 4 different graphs plotted using the code
+> For more information, view the [GP README.md](/Graph%20Plotter/README.md)
