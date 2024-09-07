@@ -151,8 +151,13 @@ public class GraphPlotter {
 
     // Draw the graph
     void DrawGraph(float[] graph, color graphColor) {
-      stroke(graphColor);
-      for (int i = 0; i < totalPoints - 1; i++) {
+      for (int i = 1; i < totalPoints; i++) {
+        DrawPoint(graph, graphColor, i);
+      }
+    }
+    
+    void DrawPoint(float[] graph, color graphColor, int indexP) {
+        stroke(graphColor);
         float X1 = 0;
         float X2 = 0;
         float Y1 = 0;
@@ -160,14 +165,12 @@ public class GraphPlotter {
         boolean drawPoints = Points;
 
         // Get coordinate of current value
-        float x1 = map(i, 0, totalPoints - 1, 100, WidthP - 50);
-        //float y1 = map(graph[i], YMin, YMax, HeightP - 50, 50);
-        float y1 = yCo(graph[i]);
+        float x1 = xCo(x(indexP - 1));
+        float y1 = yCo(graph[indexP - 1]);
 
         // Get coordinate of next value
-        float x2 = map(i + 1, 0, totalPoints - 1, 100, WidthP - 50);
-        //float y2 = map(graph[i + 1], YMin, YMax, HeightP - 50, 50);
-        float y2 = yCo(graph[i + 1]);
+        float x2 = xCo(x(indexP));
+        float y2 = yCo(graph[indexP]);
         
         // Calculate Gradient for filtering lines
         float m = (y2 - y1) / (x2 - x1);
@@ -209,7 +212,6 @@ public class GraphPlotter {
           drawPoints = false;
         }
         DrawSegment(drawPoints, X1, Y1, X2, Y2);
-      }
     }
     
     // Draws a straight line segment from one point to another also uses boolean to decide whther to draw points on ends of the segment
